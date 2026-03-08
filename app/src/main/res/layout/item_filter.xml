@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/filterCard"
     android:layout_width="wrap_content"
-    android:layout_height="35dp"
+    android:layout_height="32dp"
     android:layout_marginEnd="8dp"
     app:cardCornerRadius="20dp"
     app:cardBackgroundColor="#FFFFFF"
@@ -15,7 +15,7 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_height="32dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingStart="15dp"
@@ -23,8 +23,8 @@
 
         <ImageView
             android:id="@+id/filterIcon"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:src="@drawable/ic_paw"
             android:layout_marginEnd="4dp"
             android:visibility="visible" />
@@ -33,7 +33,7 @@
             android:id="@+id/filterLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:text="Cat"
             android:textColor="#000000"
             android:fontFamily="sans-serif-medium" />

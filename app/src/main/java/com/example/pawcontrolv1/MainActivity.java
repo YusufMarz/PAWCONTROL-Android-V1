@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private final List<Person> peopleList = Arrays.asList(
             new Person("Oppaih",     R.drawable.ic_default_avatar),
             new Person("Yusuf Marz", R.drawable.ic_default_avatar),
-            new Person("Pesuu",      R.drawable.ic_default_avatar),
-            new Person("Lurkiz",      R.drawable.ic_default_avatar),
+            new Person("Pesuu", R.drawable.ic_default_avatar),
+            new Person("Lurkiz", R.drawable.ic_default_avatar),
             new Person("Muz",      R.drawable.ic_default_avatar)
     );
 
@@ -93,10 +93,15 @@ public class MainActivity extends AppCompatActivity {
                 .inflate(R.layout.popup_people, null);
 
         // Build popup window
+        // Convert dp to pixels for consistent sizing across screen sizes
+        float density   = getResources().getDisplayMetrics().density;
+        int popupWidth  = (int) (200 * density);  // ← change width here (dp)
+        int popupHeight = android.view.ViewGroup.LayoutParams.WRAP_CONTENT; // ← or set fixed dp e.g. (int)(300 * density)
+
         PopupWindow popup = new PopupWindow(
                 popupView,
-                android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-                android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+                popupWidth,
+                popupHeight,
                 true // focusable — dismisses on outside touch
         );
         popup.setElevation(16f);
@@ -123,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
         );
         int xOffset = anchor.getWidth() - popupView.getMeasuredWidth();
-        popup.showAsDropDown(anchor, -300, 8);
+        popup.showAsDropDown(anchor, xOffset, 8);
     }
 
     // ── Filter stubs ──────────────────────────────────────────────────────────
