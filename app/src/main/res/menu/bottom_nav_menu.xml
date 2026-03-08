@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_pause"
-        android:icon="@drawable/ic_pause"
-        android:title="Pause" />
+        android:id="@+id/nav_map"
+        android:icon="@drawable/ic_map"
+        android:title="map" />
 
     <item
-        android:id="@+id/nav_home"
-        android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:id="@+id/nav_shelterVet"
+        android:icon="@drawable/ic_building"
+        android:title="shelterVet" />
 
     <item
-        android:id="@+id/nav_calendar"
-        android:icon="@drawable/ic_calendar"
-        android:title="Calendar" />
+        android:id="@+id/nav_shop"
+        android:icon="@drawable/ic_shop"
+        android:title="shop" />
 
     <item
         android:id="@+id/nav_profile"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/ic_person"
         android:title="Profile" />
 
     <item
-        android:id="@+id/nav_paw"
-        android:icon="@drawable/ic_paw_nav"
-        android:title="Pets" />
+        android:id="@+id/nav_report"
+        android:icon="@drawable/ic_paw"
+        android:title="Report" />
 </menu>
