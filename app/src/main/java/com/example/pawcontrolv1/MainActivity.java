@@ -27,10 +27,10 @@ public class MainActivity extends AppCompatActivity {
     // ── Sample people data — replace with your real data source ──────────────
     private final List<Person> peopleList = Arrays.asList(
             new Person("Oppaih",     R.drawable.ic_default_avatar),
-            new Person("Yusuf Marz", R.drawable.ic_default_avatar),
-            new Person("Pesuu", R.drawable.ic_default_avatar),
+            new Person("Yusuf Marz", R.drawable.ic_dp1),
+            new Person("Pesuu", R.drawable.ic_dp1),
             new Person("Lurkiz", R.drawable.ic_default_avatar),
-            new Person("Muz",      R.drawable.ic_default_avatar)
+            new Person("Muz",      R.drawable.ic_dp1)
     );
 
     @Override

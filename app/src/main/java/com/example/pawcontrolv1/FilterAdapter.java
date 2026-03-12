@@ -36,12 +36,12 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterView
     // ── Default filters for a stray cat/dog app ───────────────────────────────
     public static List<FilterItem> getDefaultFilters(Context ctx) {
         return Arrays.asList(
-                new FilterItem("All",      R.drawable.ic_paw),       // grid / paw icon
-                new FilterItem("Cat",      R.drawable.ic_paw),
-                new FilterItem("Dog",      R.drawable.ic_paw),
-                new FilterItem("Lost",     R.drawable.ic_paw),      // exclamation / pin icon
-                new FilterItem("Rescued",  R.drawable.ic_paw),   // heart icon
-                new FilterItem("Shelter",  R.drawable.ic_paw)    // house icon
+                new FilterItem("All",      R.drawable.ic_cat),       // grid / paw icon
+                new FilterItem("Cat",      R.drawable.ic_cat),
+                new FilterItem("Dog",      R.drawable.ic_cat),
+                new FilterItem("Lost",     R.drawable.ic_cat),      // exclamation / pin icon
+                new FilterItem("Rescued",  R.drawable.ic_cat),   // heart icon
+                new FilterItem("Shelter",  R.drawable.ic_cat)    // house icon
         );
     }
 
@@ -105,7 +105,7 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterView
                     ContextCompat.getColor(ctx, R.color.filter_text_selected));  // e.g. #D84315
         } else {
             holder.card.setCardBackgroundColor(
-                    ContextCompat.getColor(ctx, R.color.filter_bg_default));     // #FFFFFF
+                    ContextCompat.getColor(ctx, R.color.filter_bg_default));     // #
             holder.card.setStrokeColor(
                     ContextCompat.getColor(ctx, R.color.filter_stroke_default)); // #DDDDDD
             holder.label.setTextColor(

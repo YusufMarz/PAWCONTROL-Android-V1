@@ -33,7 +33,7 @@
             android:layout_height="45dp"
             android:layout_weight="1"
             app:cardCornerRadius="24dp"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardBackgroundColor="#F4F3EE"
             app:cardElevation="6dp"
             app:strokeColor="#000000"
             app:strokeWidth="2dp">
@@ -56,8 +56,9 @@
                     android:layout_width="0dp"
                     android:layout_height="48dp"
                     android:layout_weight="1"
-                    android:background="#FFFFFF"
+                    android:background="#F4F3EE"
                     android:hint="Search pet..."
+                    android:textColorHint="#000000"
                     android:imeOptions="actionSearch"
                     android:inputType="text"
                     android:paddingStart="12dp"
@@ -89,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="24dp"
-                app:cardBackgroundColor="#FFFFFF"
+                app:cardBackgroundColor="#F4F3EE"
                 app:cardElevation="6dp"
                 app:strokeColor="#000000"
                 app:strokeWidth="2dp">

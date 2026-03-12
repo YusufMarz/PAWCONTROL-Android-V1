@@ -55,7 +55,6 @@ public class ShelterVetActivity extends AppCompatActivity implements OnMapReadyC
         btnVet                = findViewById(R.id.btnVet);
         btnShelter            = findViewById(R.id.btnShelter);
         recyclerViewPetHouses = findViewById(R.id.recyclerViewPetHouses);
-        bottomNavigation      = findViewById(R.id.bottomNavigation);
     }
 
     // ─────────────────────────────────────────────

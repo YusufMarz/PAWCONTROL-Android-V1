@@ -3,7 +3,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
+    android:layout_height="48dp"
     android:orientation="horizontal"
     android:gravity="center_vertical"
     android:paddingStart="16dp"
@@ -13,9 +13,9 @@
     <!-- Circular avatar -->
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/personAvatar"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
-        android:src="@drawable/ic_default_avatar" />
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_dp1" />
 
     <!-- Name -->
     <TextView
@@ -23,9 +23,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="8dp"
         android:textSize="14sp"
-        android:textColor="#1A1A1A"
+        android:textColor="#000000"
         android:fontFamily="sans-serif-medium" />
 
 </LinearLayout>
+

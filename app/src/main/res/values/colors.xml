@@ -4,12 +4,12 @@
     <color name="white">#FFFFFFFF</color>
 
      <!-- Filter chip — selected state -->
-     <color name="filter_bg_selected">#FDC6C6</color>
+     <color name="filter_bg_selected">#F67F47</color>
      <color name="filter_stroke_selected">#000000</color>
      <color name="filter_text_selected">#000000</color>
 
      <!-- Filter chip — default state -->
-     <color name="filter_bg_default">#FFFFFF</color>
+     <color name="filter_bg_default">#F4F3EE</color>
      <color name="filter_stroke_default">#000000</color>
      <color name="filter_text_default">#000000</color>
 
