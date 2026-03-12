@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F3EE"
+    tools:context=".ShelterVet.ShelterVetActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Hero Image with rounded corners -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/dp"
+            android:layout_width="match_parent"
+            android:layout_height="420dp"
+            android:src="@drawable/dp_cat_1"
+            android:scaleType="centerCrop"
+            android:elevation="8dp"
+            android:outlineProvider="background"
+            android:stateListAnimator="@null"
+            app:shapeAppearanceOverlay="@style/RoundedBottomImageStyle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <RelativeLayout
+            android:id="@+id/user_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+
+            <!-- Name + Paw centered in the whole row -->
+            <LinearLayout
+                android:id="@+id/nameGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yusuf Marz"
+                    android:textColor="#1A1A1A"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="6dp"
+                    android:src="@drawable/ic_paw"
+                    app:tint="#F67F47" />
+
+            </LinearLayout>
+
+            <!-- Settings icon 20dp to the right of the name group -->
+            <ImageView
+                android:id="@+id/ivSettings"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_toEndOf="@id/nameGroup"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="70dp"
+                android:src="@drawable/ic_setting"/>
+
+        </RelativeLayout>
+
+        <!-- Tab Buttons -->
+        <LinearLayout
+            android:id="@+id/tabsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_tab_bg"
+            android:orientation="horizontal"
+            android:elevation="3dp"
+            android:padding="6dp">
+
+            <!-- Cat tab (active) -->
+            <ImageButton
+                android:id="@+id/btnPost"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tab_active_bg"
+                android:src="@drawable/ic_cat"
+                android:scaleType="fitCenter"
+                android:padding="6dp" />
+
+            <!-- Heart tab (inactive) -->
+            <ImageButton
+                android:id="@+id/btnFav"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_fav"
+                android:scaleType="fitCenter"
+                android:padding="6dp" />
+
+        </LinearLayout>
+
+<!--        &lt;!&ndash; 2-column grid of cat photos &ndash;&gt;-->
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/filterRecyclerView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:layout_marginEnd="16dp"-->
+<!--            android:layout_marginBottom="16dp"-->
+<!--            android:clipToPadding="false"-->
+<!--            android:nestedScrollingEnabled="false" />-->
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

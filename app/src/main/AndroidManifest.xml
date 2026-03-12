@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PawcontrolV1">
         <activity
-            android:name=".MainActivity"
+            android:name=".Profile.MainProfilePage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,9 @@
             </intent-filter>
         </activity>
 
-<!--        <activity android:name=".ShelterVetActivity" />-->
+        <activity android:name=".ShelterVet.ShelterVetActivity" />
+<!--        <activity android:name=".Profile.MainProfilePage" />-->
+
 
     </application>
 

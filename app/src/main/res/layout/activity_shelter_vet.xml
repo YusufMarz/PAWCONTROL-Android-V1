@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="#F4F3EE">
 
     <!-- Map Container (sits above Filter Buttons) -->
     <androidx.cardview.widget.CardView

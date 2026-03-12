@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Add this style to your res/values/styles.xml or themes.xml -->
+    <style name="RoundedBottomImageStyle" parent="">
+        <item name="cornerSizeBottomLeft">80dp</item>
+        <item name="cornerSizeBottomRight">80dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+    </style>
+
+</resources>
