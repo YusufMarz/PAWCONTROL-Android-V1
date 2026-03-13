@@ -74,8 +74,7 @@
 
         </RelativeLayout>
 
-        <!-- Tab Buttons -->
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/tabsLayout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -84,45 +83,55 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_tab_bg"
-            android:orientation="horizontal"
             android:elevation="3dp"
             android:padding="6dp">
 
-            <!-- Cat tab (active) -->
-            <ImageButton
-                android:id="@+id/btnPost"
+            <!-- Sliding indicator (sits behind buttons) -->
+            <View
+                android:id="@+id/tabIndicator"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/tab_active_bg"
-                android:src="@drawable/ic_cat"
-                android:scaleType="fitCenter"
-                android:padding="6dp" />
+                android:background="@drawable/tab_active_bg" />
 
-            <!-- Heart tab (inactive) -->
-            <ImageButton
-                android:id="@+id/btnFav"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_fav"
-                android:scaleType="fitCenter"
-                android:padding="6dp" />
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <ImageButton
+                    android:id="@+id/btnPost"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_cat"
+                    android:scaleType="fitCenter"
+                    android:padding="6dp" />
 
-<!--        &lt;!&ndash; 2-column grid of cat photos &ndash;&gt;-->
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/filterRecyclerView"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="16dp"-->
-<!--            android:layout_marginTop="16dp"-->
-<!--            android:layout_marginEnd="16dp"-->
-<!--            android:layout_marginBottom="16dp"-->
-<!--            android:clipToPadding="false"-->
-<!--            android:nestedScrollingEnabled="false" />-->
+                <ImageButton
+                    android:id="@+id/btnFav"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_fav"
+                    android:scaleType="fitCenter"
+                    android:padding="6dp" />
+
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- 2-column grid of cat photos -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/filterRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:clipToPadding="false"
+            android:nestedScrollingEnabled="false" />
 
     </LinearLayout>
 
