@@ -1,121 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F4F3EE">
 
-    <!-- Map Container (sits above Filter Buttons) -->
-    <androidx.cardview.widget.CardView
+    <!-- ─── MAP BOX ─────────────────────────────────────────────────────────
+         Constrained with horizontal margins so the card sits inset.
+         The MapView has its own android:layout_margin="10dp" so the
+         rendered map tiles are inset from the card border.
+    ──────────────────────────────────────────────────────────────────────── -->
+    <FrameLayout
         android:id="@+id/mapContainer"
         android:layout_width="0dp"
         android:layout_height="435dp"
+        android:layout_marginTop="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="0dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="4dp"
+        android:background="@drawable/bg_popup_rounded"
+        android:clipToOutline="true"
+        android:elevation="3.5dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/filterContainer">
-
-        <com.mapbox.mapboxsdk.maps.MapView
-            android:id="@+id/mapViewInner"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </androidx.cardview.widget.CardView>
-
-    <!-- Filter Buttons Container -->
-    <LinearLayout
-        android:id="@+id/filterContainer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="start"
-        app:layout_constraintTop_toBottomOf="@+id/mapContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- All Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnAll"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="All"
-            android:textColor="#D84315"
-            android:textSize="14sp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:backgroundTint="#FFE4E1"
-            app:cornerRadius="20dp"
-            app:icon="@drawable/ic_vet"
-            app:iconSize="16dp"
-            app:iconGravity="textStart"
-            app:strokeWidth="0dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+        <com.mapbox.mapboxsdk.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+             />
 
-        <!-- Vet Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnVet"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:text="Vet"
-            android:textColor="#666666"
-            android:textSize="14sp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:backgroundTint="#FFFFFF"
-            app:cornerRadius="20dp"
-            app:icon="@drawable/ic_vet"
-            app:iconTint="#666666"
-            app:iconSize="16dp"
-            app:iconGravity="textStart"
-            app:strokeColor="#DDDDDD"
-            app:strokeWidth="1dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+    </FrameLayout>
 
-        <!-- Shelter Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnShelter"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:text="Shelter"
-            android:textColor="#666666"
-            android:textSize="14sp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:backgroundTint="#FFFFFF"
-            app:cornerRadius="20dp"
-            app:icon="@drawable/ic_vet"
-            app:iconTint="#666666"
-            app:iconSize="16dp"
-            app:iconGravity="textStart"
-            app:strokeColor="#DDDDDD"
-            app:strokeWidth="1dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
-
-    </LinearLayout>
-
-    <!-- Horizontal RecyclerView for Pet House Cards -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewPetHouses"
+    <!-- ─── SCROLLABLE FILTER CHIPS (All · Vet · Shelt) ─────────────────────
+         Constrained start→screen start, end→start of Education chip.
+         This lets the scroll area shrink naturally so Education always
+         stays pinned to the right edge with zero margin.
+    ──────────────────────────────────────────────────────────────────────── -->
+    <HorizontalScrollView
+        android:id="@+id/filterScrollView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="20dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginStart="16dp"
+        android:scrollbars="none"
+        android:fillViewport="false"
+        app:layout_constraintTop_toBottomOf="@id/mapContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/chipEducation"
+        app:layout_constraintBottom_toBottomOf="@id/chipEducation">
+
+        <LinearLayout
+            android:id="@+id/filterChipsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/chipAll"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="All"
+                android:textSize="12.21sp"
+                android:textColor="#000000"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:elevation="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:background="@drawable/tab_orange_bg"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/chipVet"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Vet"
+                android:textSize="12.21dp"
+                android:textColor="#3D3D3D"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:elevation="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:background="@drawable/tab_khaki_bg"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/chipShelter"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Shelt"
+                android:textSize="12.21dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="#3D3D3D"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:elevation="1dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:background="@drawable/tab_khaki_bg" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- ─── EDUCATION CHIP — pinned flush to the right screen edge ───────────
+         No marginEnd so it bleeds to the edge exactly like the design.
+    ──────────────────────────────────────────────────────────────────────── -->
+
+    <!-- ─── HORIZONTAL RECYCLERVIEW ─────────────────────────────────────────
+         paddingStart=16dp so cards don't touch the screen edge.
+    ──────────────────────────────────────────────────────────────────────── -->
+    <TextView
+        android:id="@+id/chipEducation"
+        android:layout_width="wrap_content"
+        android:layout_height="42.8dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/tab_orange_left_radius"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:paddingStart="20dp"
+        android:paddingEnd="13.68dp"
+        android:text="Education"
+        android:elevation="2dp"
+        android:layout_marginBottom="5dp"
+        app:layout_goneMarginTop="5dp"
+        android:textColor="#000000"
+        android:textSize="12.21dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mapContainer"
+         />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPetServices"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
         android:clipToPadding="false"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/filterContainer"
+        app:layout_constraintTop_toBottomOf="@id/filterScrollView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/item_pet_house" />
+        tools:listitem="@layout/item_pet_service" />
 
+    <!-- ─── DOT INDICATOR ────────────────────────────────────────────────── -->
+    <LinearLayout
+        android:id="@+id/dotIndicatorLayout"
+        android:layout_width="0dp"
+        android:layout_height="8dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/rvPetServices"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <View
+            android:id="@+id/dot1"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/dot_active" />
+
+        <View
+            android:id="@+id/dot2"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/dot_inactive" />
+
+        <View
+            android:id="@+id/dot3"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/dot_inactive" />
+
+        <View
+            android:id="@+id/dot4"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/dot_inactive" />
+
+        <View
+            android:id="@+id/dot5"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:background="@drawable/dot_inactive" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
