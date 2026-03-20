@@ -6,7 +6,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import com.example.pawcontrolv1.BuildConfig;
 import com.example.pawcontrolv1.R;
@@ -15,8 +17,8 @@ import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
-import com.mapbox.mapboxsdk.maps.Style;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import android.content.Intent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,84 +41,58 @@ public class PetServicesActivity extends AppCompatActivity {
     // ── RecyclerView + Adapter ────────────────────────────────────────────────
     private RecyclerView rvPetServices;
     private PetServiceAdapter petServiceAdapter;
+    private LinearLayoutManager llm;
+    private SnapHelper snapHelper;
 
-    // ── Sample data — replace with your real data source ─────────────────────
+    // ── Sample data ───────────────────────────────────────────────────────────
     private final List<PetService> allServices = Arrays.asList(
             new PetService("Pet House Amanda",
                     "52-1, Jalan TTDI Grove, Kajang 1/2,43000 Kajang, Selangor",
-                    "091-3213 3213",
-                    "shelter",
-                    3.0738, 101.7987),
-
+                    "091-3213 3213", "shelter", 3.0738, 101.7987),
             new PetService("Klinik Haiwan Kajang",
                     "No. 10, Jalan Reko, 43000 Kajang, Selangor",
-                    "03-8736 1212",
-                    "vet",
-                    3.0682, 101.7914),
-
+                    "03-8736 1212", "vet", 3.0682, 101.7914),
             new PetService("Pawsome Vet Clinic",
                     "Lot 5, Jalan Semenyih, 43500 Semenyih",
-                    "03-8724 5500",
-                    "vet",
-                    3.0601, 101.8432),
-
+                    "03-8724 5500", "vet", 3.0601, 101.8432),
             new PetService("Furry Friends Education Centre",
                     "21, Jalan Balakong, 43300 Seri Kembangan",
-                    "012-888 9900",
-                    "education",
-                    3.0450, 101.7680),
-
+                    "012-888 9900", "education", 3.0450, 101.7680),
             new PetService("Happy Paws Shelter",
                     "Lot 88, Jalan Cheras, 43200 Cheras",
-                    "016-234 5678",
-                    "shelter",
-                    3.0890, 101.7523)
+                    "016-234 5678", "shelter", 3.0890, 101.7523)
     );
 
-    // ── Map marker coordinates (all services) ─────────────────────────────────
     private List<PetService> currentDisplayedServices = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Initialise Mapbox with your API key
         String key      = BuildConfig.MAPTILER_API_KEY;
         String styleUrl = "https://api.maptiler.com/maps/streets-v2/style.json?key=" + key;
 
         Mapbox.getInstance(this);
         setContentView(R.layout.activity_shelter_vet);
 
-        // ── Bind views ────────────────────────────────────────────────────────
         bindViews();
-
-        // ── Setup filter chips ────────────────────────────────────────────────
         setupFilterChips();
-
-        // ── Setup RecyclerView ────────────────────────────────────────────────
         setupRecyclerView();
-
-        // ── Setup dot indicators ──────────────────────────────────────────────
         setupDotIndicator();
 
-        // ── Init map ──────────────────────────────────────────────────────────
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(map -> {
             mapboxMap = map;
             map.setStyle(styleUrl, style -> {
-                // Default camera — centre on Kajang / Selangor area
                 map.setCameraPosition(new CameraPosition.Builder()
                         .target(new LatLng(3.0738, 101.7987))
                         .zoom(12.5)
                         .build());
-
-                // Show all markers on first load
                 addMarkersForServices(allServices);
             });
         });
 
-        // Default: show all services in list
         refreshList(allServices);
     }
 
@@ -137,7 +113,6 @@ public class PetServicesActivity extends AppCompatActivity {
 
     // ── Filter chip setup ─────────────────────────────────────────────────────
     private void setupFilterChips() {
-        // Default selected = "All"
         activeChip = chipAll;
         setChipSelected(chipAll);
 
@@ -146,32 +121,28 @@ public class PetServicesActivity extends AppCompatActivity {
             addMarkersForServices(allServices);
             refreshList(allServices);
         });
-
         chipVet.setOnClickListener(v -> {
             setActiveChip(chipVet);
             List<PetService> filtered = filterByType("vet");
             addMarkersForServices(filtered);
             refreshList(filtered);
         });
-
         chipShelter.setOnClickListener(v -> {
             setActiveChip(chipShelter);
             List<PetService> filtered = filterByType("shelter");
             addMarkersForServices(filtered);
             refreshList(filtered);
         });
-
         chipEducation.setOnClickListener(v -> {
+            Intent intent = new Intent(this, EducationActivity.class);
+            startActivity(intent);
         });
     }
 
     private void setActiveChip(TextView selected) {
-        // Reset all chips to unselected style
         setChipUnselected(chipAll);
         setChipUnselected(chipVet);
         setChipUnselected(chipShelter);
-
-        // Highlight selected chip
         setChipSelected(selected);
         activeChip = selected;
     }
@@ -196,7 +167,6 @@ public class PetServicesActivity extends AppCompatActivity {
     // ── RecyclerView setup ────────────────────────────────────────────────────
     private void setupRecyclerView() {
         petServiceAdapter = new PetServiceAdapter(new ArrayList<>(), service -> {
-            // Tap on a card → fly map camera to that service location
             if (mapboxMap != null) {
                 mapboxMap.animateCamera(
                         com.mapbox.mapboxsdk.camera.CameraUpdateFactory.newLatLngZoom(
@@ -206,21 +176,54 @@ public class PetServicesActivity extends AppCompatActivity {
             }
         });
 
-        rvPetServices.setLayoutManager(
-                new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        llm = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        rvPetServices.setLayoutManager(llm);
         rvPetServices.setAdapter(petServiceAdapter);
         rvPetServices.setItemAnimator(null);
 
-        // Sync dot indicator with horizontal scroll position
+        // clipToPadding=false lets neighbouring cards peek from the sides
+        // while the centred card is fully visible.
+        rvPetServices.setClipToPadding(false);
+
+        // ── Dynamic centering padding ─────────────────────────────────────────
+        // After the RecyclerView is laid out we know its exact pixel width.
+        // horizontal padding = (recyclerWidth - cardWidth) / 2
+        // Card width in item_pet_service.xml = 280dp
+        rvPetServices.post(() -> {
+            int recyclerWidth  = rvPetServices.getWidth();
+            float density      = getResources().getDisplayMetrics().density;
+            int cardWidthPx    = (int) (280 * density);
+            int sidePadding    = Math.max(0, (recyclerWidth - cardWidthPx) / 2);
+            rvPetServices.setPadding(sidePadding, 0, sidePadding, 0);
+        });
+
+        // ── Snap one card at a time to the centre ─────────────────────────────
+        snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(rvPetServices);
+
+        // ── Update dot + pan map when snapping stops ──────────────────────────
         rvPetServices.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    LinearLayoutManager lm =
-                            (LinearLayoutManager) recyclerView.getLayoutManager();
-                    if (lm != null) {
-                        int pos = lm.findFirstVisibleItemPosition();
-                        setActiveDot(pos);
+                    View snapView = snapHelper.findSnapView(llm);
+                    if (snapView != null) {
+                        int pos = llm.getPosition(snapView);
+                        if (pos >= 0) {
+                            setActiveDot(pos);
+                            // Pan map to the card that just snapped into centre
+                            if (mapboxMap != null
+                                    && pos < currentDisplayedServices.size()) {
+                                PetService s = currentDisplayedServices.get(pos);
+                                mapboxMap.animateCamera(
+                                        com.mapbox.mapboxsdk.camera.CameraUpdateFactory
+                                                .newLatLngZoom(
+                                                        new LatLng(s.getLat(), s.getLng()),
+                                                        14.0
+                                                ), 500
+                                );
+                            }
+                        }
                     }
                 }
             }
@@ -232,7 +235,10 @@ public class PetServicesActivity extends AppCompatActivity {
         currentDisplayedServices = services;
         petServiceAdapter.updateData(services);
 
-        // Reset dots to match new list size (max 5 dots shown)
+        // Always snap back to first card after a filter change
+        rvPetServices.scrollToPosition(0);
+
+        // Show only as many dots as there are items (max 5)
         int visibleDots = Math.min(services.size(), dots.size());
         for (int i = 0; i < dots.size(); i++) {
             dots.get(i).setVisibility(i < visibleDots ? View.VISIBLE : View.GONE);
@@ -240,7 +246,7 @@ public class PetServicesActivity extends AppCompatActivity {
         setActiveDot(0);
     }
 
-    // ── Dot indicator setup ───────────────────────────────────────────────────
+    // ── Dot indicator ─────────────────────────────────────────────────────────
     private void setupDotIndicator() {
         dots.add(dot1);
         dots.add(dot2);
@@ -263,16 +269,13 @@ public class PetServicesActivity extends AppCompatActivity {
     // ── Map markers ───────────────────────────────────────────────────────────
     private void addMarkersForServices(List<PetService> services) {
         if (mapboxMap == null) return;
-        mapboxMap.clear(); // remove existing markers
-
+        mapboxMap.clear();
         for (PetService s : services) {
             mapboxMap.addMarker(new MarkerOptions()
                     .position(new LatLng(s.getLat(), s.getLng()))
                     .title(s.getName())
                     .snippet(s.getAddress()));
         }
-
-        // Optionally pan camera to first result
         if (!services.isEmpty()) {
             mapboxMap.animateCamera(
                     com.mapbox.mapboxsdk.camera.CameraUpdateFactory.newLatLngZoom(
@@ -283,13 +286,13 @@ public class PetServicesActivity extends AppCompatActivity {
         }
     }
 
-    // ── MapView lifecycle (required by Mapbox SDK) ────────────────────────────
-    @Override protected void onStart()   { super.onStart();   mapView.onStart();   }
-    @Override protected void onResume()  { super.onResume();  mapView.onResume();  }
-    @Override protected void onPause()   { super.onPause();   mapView.onPause();   }
-    @Override protected void onStop()    { super.onStop();    mapView.onStop();    }
+    // ── MapView lifecycle ─────────────────────────────────────────────────────
+    @Override protected void onStart()   { super.onStart();    mapView.onStart();   }
+    @Override protected void onResume()  { super.onResume();   mapView.onResume();  }
+    @Override protected void onPause()   { super.onPause();    mapView.onPause();   }
+    @Override protected void onStop()    { super.onStop();     mapView.onStop();    }
     @Override public void onLowMemory() { super.onLowMemory(); mapView.onLowMemory(); }
-    @Override protected void onDestroy() { super.onDestroy(); mapView.onDestroy(); }
+    @Override protected void onDestroy() { super.onDestroy();  mapView.onDestroy(); }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
